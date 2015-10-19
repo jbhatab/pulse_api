@@ -35,7 +35,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :pulse_api, PulseApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "blaine",
+  username: "change me",
   password: "",
   database: "pulse_api_dev",
   hostname: "localhost",
