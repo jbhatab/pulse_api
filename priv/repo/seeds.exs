@@ -9,3 +9,6 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+PulseApi.Repo.insert!(%PulseApi.Room{name: "General"})
+PulseApi.Repo.insert!(%PulseApi.Room{name: "Random"})
