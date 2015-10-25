@@ -2,6 +2,8 @@ defmodule PulseApi.RoomChannel do
   use Phoenix.Channel
   require Logger
 
+  alias PulseApi.Message
+
   def join("rooms:lobby", message, socket) do
     Process.flag(:trap_exit, true)
     :timer.send_interval(5000, :ping)
@@ -30,7 +32,17 @@ defmodule PulseApi.RoomChannel do
   end
 
   def handle_in("new:msg", msg, socket) do
-    broadcast! socket, "new:msg", %{user: msg["user"], body: msg["body"]}
-    {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
+    message_params = %{body: msg["body"], room_id: 1 }
+    changeset = Message.changeset(%Message{}, message_params)
+
+    case PulseApi.Repo.insert(changeset) do
+      {:ok, room} ->
+        broadcast! socket, "new:msg", %{user: msg["user"], body: msg["body"]}
+        {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
+      {:error, changeset} ->
+    end
+
+    # broadcast! socket, "new:msg", %{user: msg["user"], body: msg["body"]}
+    # {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
   end
 end

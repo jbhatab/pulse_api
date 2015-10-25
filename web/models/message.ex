@@ -10,7 +10,7 @@ defmodule PulseApi.Message do
   end
 
   @required_fields ~w(body)
-  @optional_fields ~w()
+  @optional_fields ~w(room_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
