@@ -38,7 +38,7 @@ defmodule PulseApi.RoomChannel do
     case PulseApi.Repo.insert(changeset) do
       {:ok, room} ->
         broadcast! socket, "new:msg", %{user: msg["user"], body: msg["body"], room_id: msg["room_id"]}
-        {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"], room_id: msg["room_id"])}
+        {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
       {:error, changeset} ->
     end
   end
