@@ -39,7 +39,7 @@ defmodule PulseApi.RoomChannel do
   end
 
   def handle_info({:after_join, msg}, socket) do
-    push socket, "user:entered", %{user: msg["username"]}
+    broadcast socket, "user:entered", %{user: msg["username"]}
 
     # push socket, "join", %{status: "connected"}
     {:noreply, socket}
@@ -56,14 +56,14 @@ defmodule PulseApi.RoomChannel do
 
     case PulseApi.Repo.insert(changeset) do
       {:ok, room} ->
-        push socket, "new:msg", %{user: msg["user"], body: msg["body"], room_id: msg["room_id"]}
+        broadcast socket, "new:msg", %{user: msg["user"], body: msg["body"], room_id: msg["room_id"]}
         {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
       {:error, changeset} ->
     end
   end
 
   def handle_in("change:username", user, socket) do
-    push socket, "user:set_username", %{username: user["username"]}
+    broadcast socket, "user:set_username", %{username: user["username"]}
 
     {:noreply, socket}
   end
