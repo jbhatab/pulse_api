@@ -1,16 +1,17 @@
-defmodule PulseApi.Room do
+defmodule PulseApi.Channel do
   use PulseApi.Web, :model
 
-  schema "rooms" do
-    field :name, :string
-
+  schema "channels" do
+    belongs_to :community, Community
     has_many :messages, Message
+
+    field :name, :string
 
     timestamps
   end
 
   @required_fields ~w(name)
-  @optional_fields ~w()
+  @optional_fields ~w(community_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

@@ -16,7 +16,7 @@ defmodule PulseApi.Router do
   scope "/", PulseApi do
     pipe_through :browser # Use the default browser stack
 
-    resources "/rooms", RoomController
+    resources "/channels", ChannelController
 
     get "/", PageController, :index
   end
