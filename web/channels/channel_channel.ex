@@ -1,10 +1,10 @@
-defmodule PulseApi.RoomChannel do
+defmodule PulseApi.ChannelChannel do
   use Phoenix.Channel
   require Logger
 
   alias PulseApi.Message
 
-  def join("rooms:lobby", message, socket) do
+  def join("channels:lobby", message, socket) do
     Process.flag(:trap_exit, true)
     send(self, {:after_join, message})
 
@@ -56,7 +56,7 @@ defmodule PulseApi.RoomChannel do
 
     case PulseApi.Repo.insert(changeset) do
       {:ok, room} ->
-        broadcast socket, "new:msg", %{user: msg["user"], body: msg["body"], room_id: msg["room_id"]}
+        broadcast socket, "new:msg", %{user: msg["user"], body: msg["body"], channel_id: msg["channel_id"]}
         {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
       {:error, changeset} ->
     end

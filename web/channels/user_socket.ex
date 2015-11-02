@@ -2,7 +2,7 @@ defmodule PulseApi.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "rooms:*", PulseApi.RoomChannel
+  channel "channels:*", PulseApi.ChannelChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

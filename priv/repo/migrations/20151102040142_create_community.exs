@@ -1,8 +1,8 @@
-defmodule PulseApi.Repo.Migrations.CreateRoom do
+defmodule PulseApi.Repo.Migrations.CreateCommunity do
   use Ecto.Migration
 
   def change do
-    create table(:rooms) do
+    create table(:communities) do
       add :name, :string
 
       timestamps
