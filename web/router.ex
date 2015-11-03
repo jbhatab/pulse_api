@@ -17,6 +17,7 @@ defmodule PulseApi.Router do
     pipe_through :browser # Use the default browser stack
 
     resources "/channels", ChannelController
+    resources "/messages", MessageController
 
     get "/", PageController, :index
   end

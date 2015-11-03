@@ -2,8 +2,8 @@ defmodule PulseApi.Channel do
   use PulseApi.Web, :model
 
   schema "channels" do
-    belongs_to :community, Community
-    has_many :messages, Message
+    belongs_to :community, PulseApi.Community
+    has_many :messages, PulseApi.Message
 
     field :name, :string
 

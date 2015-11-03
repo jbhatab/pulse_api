@@ -51,11 +51,15 @@ defmodule PulseApi.ChannelChannel do
   end
 
   def handle_in("new:msg", msg, socket) do
-    message_params = %{body: msg["body"], room_id: msg["room_id"] }
+    message_params = %{body: msg["body"], channel_id: msg["channel_id"] }
     changeset = Message.changeset(%Message{}, message_params)
 
+    Logger.debug"Message params"
+    Logger.debug"#{inspect msg}"
+    Logger.debug"Message params"
+
     case PulseApi.Repo.insert(changeset) do
-      {:ok, room} ->
+      {:ok, channel} ->
         broadcast socket, "new:msg", %{user: msg["user"], body: msg["body"], channel_id: msg["channel_id"]}
         {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
       {:error, changeset} ->
